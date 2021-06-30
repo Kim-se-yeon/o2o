@@ -1,0 +1,23 @@
+import pandas as pd
+import json
+df = pd.read_csv('sample.csv')
+def get_nested_rec(key, grp):
+    rec = {}
+    rec['id'] = str(key[0])
+    rec['title'] = key[1]
+    rec['context'] = key[2]
+    rec['question'] = key[3]
+    tmp = {}
+    field1 = 'answer_text'
+    field2 = 'answer_start'
+    tmp[field1] = grp[field1].unique().tolist()[0].split('|')
+        # list(grp[field1].unique())
+    tmp[field2] = grp[field2].unique().tolist()[0].split('|')
+    rec['answers'] = tmp
+    return rec
+records = []
+for key, grp in df.groupby(['id','title','context','question']):
+    rec = get_nested_rec(key, grp)
+    records.append(rec)
+# records = dict(data = records)
+print(json.dumps(records,  ensure_ascii=False, indent=4))
