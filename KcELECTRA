@@ -1,9 +1,0 @@
-!pip install tensorflow==2.2.0
-!pip install PyYAML==5.4.1
-
-try:
-    import transformers, emoji, soynlp, pytorch_lightning
-except:
-    !pip install -U -q transformers emoji soynlp pytorch-lightning
-    
-    
